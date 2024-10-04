@@ -1,3 +1,7 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
 #include "CPU.hpp"
 
 CPU::CPU(int numCores)
@@ -14,6 +18,16 @@ CPU::~CPU()
 int CPU::getNumCores()
 {
     return numCores;
+}
+
+int CPU::getSize(int core)
+{
+    return cores[core].getSize();
+}
+
+int CPU::getCapacity(int core)
+{
+    return cores[core].getCapacity();
 }
 
 int CPU::addTask(int task)
@@ -60,4 +74,16 @@ int CPU::runTask(int core)
         return -1;
     }
     return cores[core].popBack();
+}
+
+void CPU::sleep(int core)
+{
+    int task = cores[core].popFront();
+    while (task != -1)
+    {
+    }
+    if (task != -1)
+    {
+        cores[core].pushFront(task);
+    }
 }

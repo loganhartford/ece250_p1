@@ -69,11 +69,29 @@ int main()
         }
         else if (cmd == "SIZE")
         {
-            cout << "failure" << endl;
+            int core;
+            cin >> core;
+            if (cpu && core >= 0 && core < cpu->getNumCores())
+            {
+                cout << "size is " << cpu->getSize(core) << endl;
+            }
+            else
+            {
+                cout << "failure" << endl;
+            }
         }
         else if (cmd == "CAPACITY")
         {
-            cout << "failure" << endl;
+            int core;
+            cin >> core;
+            if (cpu && core >= 0 && core < cpu->getNumCores())
+            {
+                cout << "capacity is " << cpu->getCapacity(core) << endl;
+            }
+            else
+            {
+                cout << "failure" << endl;
+            }
         }
         else if (cmd == "END")
         {
