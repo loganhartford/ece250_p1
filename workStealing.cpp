@@ -19,10 +19,11 @@ int main()
             {
                 cout << "failure" << endl;
             }
-
-            cpu = new CPU(cores);
-
-            cout << "success" << endl;
+            else
+            {
+                cpu = new CPU(cores);
+                cout << "success" << endl;
+            }
         }
         else if (cmd == "SPAWN")
         {
@@ -75,7 +76,15 @@ int main()
         }
         else if (cmd == "SHUTDOWN")
         {
-            cout << "failure" << endl;
+            if (cpu)
+            {
+                string result = cpu->shudown();
+                cout << result << endl;
+            }
+            else
+            {
+                cout << "failure" << endl;
+            }
         }
         else if (cmd == "SIZE")
         {
@@ -105,8 +114,19 @@ int main()
         }
         else if (cmd == "END")
         {
+            if (cpu)
+            {
+                delete cpu;
+                cpu = nullptr;
+            }
             return 0;
         }
+    }
+
+    if (cpu)
+    {
+        delete cpu;
+        cpu = nullptr;
     }
     return 0;
 }

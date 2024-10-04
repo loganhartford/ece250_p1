@@ -107,3 +107,22 @@ string CPU::sleep(int core)
 
     return result;
 }
+
+string CPU::shudown()
+{
+    string result = "";
+
+    for (int i = 0; i < numCores; i++)
+    {
+        while (cores[i].getSize() > 0)
+        {
+            result += "deleting task " + to_string(cores[i].popBack()) + " from core " + to_string(i) + " ";
+        }
+    }
+
+    if (result == "")
+    {
+        return "no tasks to remove";
+    }
+    return result;
+}
