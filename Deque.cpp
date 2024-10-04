@@ -14,7 +14,7 @@ Deque::~Deque()
 
 void Deque::resize(int newCapacity)
 {
-    int* newQueue = new int[newCapacity];
+    int *newQueue = new int[newCapacity];
     for (int i = 0; i < size; i++)
     {
         newQueue[i] = queue[i];
@@ -36,32 +36,19 @@ void Deque::pushFront(int value)
 
     if (size == capacity)
     {
-        int *newQueue = new int[capacity * 2];
-        for (int i = 0; i < size; i++)
-        {
-            newQueue[i] = queue[i];
-        }
-        delete[] queue;
-        queue = newQueue;
-        capacity *= 2;
+        resize(capacity * 2);
     }
 }
 
 void Deque::pushBack(int value)
 {
-    if (size == capacity)
-    {
-        int *newQueue = new int[capacity * 2];
-        for (int i = 0; i < size; i++)
-        {
-            newQueue[i] = queue[i];
-        }
-        delete[] queue;
-        queue = newQueue;
-        capacity *= 2;
-    }
     queue[size] = value;
     size++;
+
+    if (size == capacity)
+    {
+        resize(capacity * 2);
+    }
 }
 
 int Deque::popBack()
@@ -71,7 +58,12 @@ int Deque::popBack()
         return -1;
     }
     size--;
-    return queue[size];
+    int task = queue[size];
+    if (size > 0 && size <= capacity / 4 && capacity > 2)
+    {
+        resize(capacity / 2);
+    }
+    return task;
 }
 
 int Deque::popFront()
@@ -80,13 +72,18 @@ int Deque::popFront()
     {
         return -1;
     }
-    int value = queue[0];
+    int task = queue[0];
     for (int i = 0; i < size - 1; i++)
     {
         queue[i] = queue[i + 1];
     }
     size--;
-    return value;
+
+    if (size > 0 && size <= capacity / 4 && capacity > 2)
+    {
+        resize(capacity / 2);
+    }
+    return task;
 }
 
 int Deque::getSize()

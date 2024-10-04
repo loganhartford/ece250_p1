@@ -24,7 +24,7 @@ private:
     int size;
     int capacity;
 
-    void resize(int capacity)
+    void resize(int capacity);
 };
 
 #endif

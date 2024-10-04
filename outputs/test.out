@@ -1,0 +1,18 @@
+success
+core 0 assigned task 5
+core 1 assigned task 10
+core 2 assigned task 15
+core 0 assigned task 20
+core 0 is running task 5
+failure
+failure
+task 10 assigned to core 0 
+core 0 assigned task 25
+core 0 assigned task 30
+task 30 assigned to core 0 task 25 assigned to core 0 task 20 assigned to core 0 task 15 assigned to core 0 
+core 2 has no tasks to run
+core 1 has no tasks to run
+size is 5
+size is 0
+size is 0
+deleting task 30 from core 0 deleting task 25 from core 0 deleting task 20 from core 0 deleting task 15 from core 0 
