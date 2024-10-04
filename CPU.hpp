@@ -18,7 +18,7 @@ public:
     int getCapacity(int core);
 
     int addTask(int task);
-    int runTask(int core);
+    string runTask(int core);
 
     string sleep(int core);
     string shudown();

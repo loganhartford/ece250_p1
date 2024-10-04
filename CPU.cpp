@@ -28,10 +28,9 @@ int CPU::getCapacity(int core)
 
 int CPU::addTask(int task)
 {
-    // TODO: handle case where all cores are full
-    int minSize = cores[0].getSize();
-    int minIndex = 0;
-    for (int i = 1; i < numCores; i++)
+    int minSize = INT_MAX;
+    int minIndex = -1;
+    for (int i = 0; i < numCores; i++)
     {
         if (cores[i].getSize() < minSize)
         {
@@ -46,10 +45,9 @@ int CPU::addTask(int task)
 
 int CPU::stealTask()
 {
-    // TODO: handle case where all cores are empty
-    int maxSize = cores[0].getSize();
-    int maxIndex = 0;
-    for (int i = 1; i < numCores; i++)
+    int maxSize = 0;
+    int maxIndex = -1;
+    for (int i = 0; i < numCores; i++)
     {
         if (cores[i].getSize() > maxSize)
         {
@@ -57,11 +55,17 @@ int CPU::stealTask()
             maxIndex = i;
         }
     }
-    return cores[maxIndex].popBack();
+
+    if (maxIndex == -1)
+    {
+        return -1;
+    }
+    return cores[maxIndex].popFront();
 }
 
-int CPU::runTask(int core)
+string CPU::runTask(int core)
 {
+    string result = "";
     if (cores[core].getSize() == 0)
     {
         int task = stealTask();
@@ -69,9 +73,20 @@ int CPU::runTask(int core)
         {
             cores[core].pushFront(task);
         }
-        return -1;
+        return "core " + to_string(core) + " has no tasks to run";
     }
-    return cores[core].popBack();
+    result = "core " + to_string(core) + " is running task " + to_string(cores[core].popBack());
+
+    if (cores[core].getSize() == 0)
+    {
+        int task = stealTask();
+        if (task != -1)
+        {
+            cores[core].pushFront(task);
+        }
+    }
+
+    return result;
 }
 
 string CPU::sleep(int core)
