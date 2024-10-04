@@ -33,11 +33,30 @@ int CPU::addTask(int task)
     return minIndex;
 }
 
+int CPU::stealTask()
+{
+    int maxSize = cores[0].getSize();
+    int maxIndex = 0;
+    for (int i = 1; i < numCores; i++)
+    {
+        if (cores[i].getSize() > maxSize)
+        {
+            maxSize = cores[i].getSize();
+            maxIndex = i;
+        }
+    }
+    return cores[maxIndex].popBack();
+}
+
 int CPU::runTask(int core)
 {
     if (cores[core].getSize() == 0)
     {
-        // Add task stealing
+        int task = stealTask();
+        if (task != -1)
+        {
+            cores[core].pushFront(task);
+        }
         return -1;
     }
     return cores[core].popBack();

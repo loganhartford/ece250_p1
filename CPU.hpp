@@ -16,6 +16,8 @@ public:
 private:
     int numCores;
     Deque *cores;
+
+    int stealTask();
 };
 
 #endif
