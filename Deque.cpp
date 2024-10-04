@@ -14,6 +14,13 @@ Deque::~Deque()
 
 void Deque::pushFront(int value)
 {
+    for (int i = size; i > 0; i--)
+    {
+        queue[i] = queue[i - 1];
+    }
+    queue[0] = value;
+    size++;
+
     if (size == capacity)
     {
         int *newQueue = new int[capacity * 2];
@@ -25,12 +32,6 @@ void Deque::pushFront(int value)
         queue = newQueue;
         capacity *= 2;
     }
-    for (int i = size; i > 0; i--)
-    {
-        queue[i] = queue[i - 1];
-    }
-    queue[0] = value;
-    size++;
 }
 
 void Deque::pushBack(int value)
