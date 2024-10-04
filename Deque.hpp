@@ -23,6 +23,8 @@ private:
     int *queue;
     int size;
     int capacity;
+
+    void resize(int capacity)
 };
 
 #endif

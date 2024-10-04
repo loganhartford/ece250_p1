@@ -12,6 +12,19 @@ Deque::~Deque()
     delete[] queue;
 }
 
+void Deque::resize(int newCapacity)
+{
+    int* newQueue = new int[newCapacity];
+    for (int i = 0; i < size; i++)
+    {
+        newQueue[i] = queue[i];
+    }
+
+    delete[] queue;
+    queue = newQueue;
+    capacity = newCapacity;
+}
+
 void Deque::pushFront(int value)
 {
     for (int i = size; i > 0; i--)
