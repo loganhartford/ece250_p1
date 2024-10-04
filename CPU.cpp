@@ -11,23 +11,36 @@ CPU::~CPU()
     delete[] cores;
 }
 
-int CPU::getNumCores()
+bool CPU::validateCore(int core)
 {
-    return numCores;
+    return core >= 0 && core < numCores;
 }
 
-int CPU::getSize(int core)
+string CPU::getSize(int core)
 {
-    return cores[core].getSize();
+    if (!validateCore(core))
+    {
+        return "failure";
+    }
+    return "size is " + to_string(cores[core].getSize());
 }
 
-int CPU::getCapacity(int core)
+string CPU::getCapacity(int core)
 {
-    return cores[core].getCapacity();
+    if (!validateCore(core))
+    {
+        return "failure";
+    }
+    return "capacity is " + to_string(cores[core].getCapacity());
 }
 
-int CPU::addTask(int task)
+string CPU::addTask(int task)
 {
+    if (task <= 0)
+    {
+        return "failure";
+    }
+
     int minSize = INT_MAX;
     int minIndex = -1;
     for (int i = 0; i < numCores; i++)
@@ -40,7 +53,7 @@ int CPU::addTask(int task)
     }
     cores[minIndex].pushFront(task);
 
-    return minIndex;
+    return "core " + to_string(minIndex) + " assigned task " + to_string(task);
 }
 
 int CPU::stealTask()
@@ -65,7 +78,11 @@ int CPU::stealTask()
 
 string CPU::runTask(int core)
 {
-    string result = "";
+    if (!validateCore(core))
+    {
+        return "failure";
+    }
+
     if (cores[core].getSize() == 0)
     {
         int task = stealTask();
@@ -75,7 +92,8 @@ string CPU::runTask(int core)
         }
         return "core " + to_string(core) + " has no tasks to run";
     }
-    result = "core " + to_string(core) + " is running task " + to_string(cores[core].popBack());
+
+    string result = "core " + to_string(core) + " is running task " + to_string(cores[core].popBack());
 
     if (cores[core].getSize() == 0)
     {
@@ -91,6 +109,11 @@ string CPU::runTask(int core)
 
 string CPU::sleep(int core)
 {
+    if (!validateCore(core))
+    {
+        return "failure";
+    }
+
     if (cores[core].getSize() == 0)
     {
         return "core " + to_string(core) + " has no tasks to assign";
@@ -123,7 +146,7 @@ string CPU::sleep(int core)
     return result;
 }
 
-string CPU::shudown()
+string CPU::shutdown()
 {
     string result = "";
 

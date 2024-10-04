@@ -8,9 +8,11 @@ int main()
 {
     string cmd;
     CPU *cpu = nullptr;
+    int core;
 
     while (cin >> cmd)
     {
+        core = -1;
         if (cmd == "ON")
         {
             int cores;
@@ -29,10 +31,9 @@ int main()
         {
             int task;
             cin >> task;
-            if (cpu && task > 0)
+            if (cpu)
             {
-                int core = cpu->addTask(task);
-                cout << "core " << core << " assigned task " << task << endl;
+                cout << cpu->addTask(task) << endl;
             }
             else
             {
@@ -41,12 +42,10 @@ int main()
         }
         else if (cmd == "RUN")
         {
-            int core;
             cin >> core;
-            if (cpu && core >= 0 && core < cpu->getNumCores())
+            if (cpu)
             {
-                string result = cpu->runTask(core);
-                cout << result << endl;
+                cout << cpu->runTask(core) << endl;
             }
             else
             {
@@ -55,24 +54,17 @@ int main()
         }
         else if (cmd == "SLEEP")
         {
-            int core;
             cin >> core;
-            if (cpu && core >= 0 && core < cpu->getNumCores())
+            if (cpu)
             {
-                string result = cpu->sleep(core);
-                cout << result << endl;
-            }
-            else
-            {
-                cout << "failure" << endl;
+                cout << cpu->sleep(core) << endl;
             }
         }
         else if (cmd == "SHUTDOWN")
         {
             if (cpu)
             {
-                string result = cpu->shudown();
-                cout << result << endl;
+                cout << cpu->shutdown() << endl;
             }
             else
             {
@@ -81,11 +73,10 @@ int main()
         }
         else if (cmd == "SIZE")
         {
-            int core;
             cin >> core;
-            if (cpu && core >= 0 && core < cpu->getNumCores())
+            if (cpu)
             {
-                cout << "size is " << cpu->getSize(core) << endl;
+                cout << cpu->getSize(core) << endl;
             }
             else
             {
@@ -94,11 +85,10 @@ int main()
         }
         else if (cmd == "CAPACITY")
         {
-            int core;
             cin >> core;
-            if (cpu && core >= 0 && core < cpu->getNumCores())
+            if (cpu)
             {
-                cout << "capacity is " << cpu->getCapacity(core) << endl;
+                cout << cpu->getCapacity(core) << endl;
             }
             else
             {

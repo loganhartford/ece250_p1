@@ -13,19 +13,20 @@ public:
     CPU(int numCores);
     ~CPU();
 
-    int getNumCores();
-    int getSize(int core);
-    int getCapacity(int core);
+    string getSize(int core);
+    string getCapacity(int core);
 
-    int addTask(int task);
+    string addTask(int task);
     string runTask(int core);
 
     string sleep(int core);
-    string shudown();
+    string shutdown();
 
 private:
     int numCores;
     Deque *cores;
+
+    bool validateCore(int core);
 
     int stealTask();
 };
