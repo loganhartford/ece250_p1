@@ -1,7 +1,3 @@
-#include <iostream>
-#include <string>
-using namespace std;
-
 #include "CPU.hpp"
 
 CPU::CPU(int numCores)
@@ -32,6 +28,7 @@ int CPU::getCapacity(int core)
 
 int CPU::addTask(int task)
 {
+    // TODO: handle case where all cores are full
     int minSize = cores[0].getSize();
     int minIndex = 0;
     for (int i = 1; i < numCores; i++)
@@ -49,6 +46,7 @@ int CPU::addTask(int task)
 
 int CPU::stealTask()
 {
+    // TODO: handle case where all cores are empty
     int maxSize = cores[0].getSize();
     int maxIndex = 0;
     for (int i = 1; i < numCores; i++)
@@ -76,14 +74,36 @@ int CPU::runTask(int core)
     return cores[core].popBack();
 }
 
-void CPU::sleep(int core)
+string CPU::sleep(int core)
 {
-    int task = cores[core].popFront();
-    while (task != -1)
+    if (cores[core].getSize() == 0)
     {
+        return "core " + to_string(core) + " has no tasks to assign";
     }
-    if (task != -1)
+
+    string result = "";
+
+    while (cores[core].getSize() > 0)
     {
-        cores[core].pushFront(task);
+        int task = cores[core].popFront();
+
+        int minSize = INT_MAX;
+        int minIndex = -1;
+        for (int i = 0; i < numCores; i++)
+        {
+            if (i != core && cores[i].getSize() < minSize)
+            {
+                minSize = cores[i].getSize();
+                minIndex = i;
+            }
+        }
+
+        if (minIndex != -1)
+        {
+            cores[minIndex].pushFront(task);
+            result += "task " + to_string(task) + " assigned to core " + to_string(minIndex) + " ";
+        }
     }
+
+    return result;
 }

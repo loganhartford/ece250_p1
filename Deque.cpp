@@ -84,3 +84,13 @@ int Deque::getCapacity()
 {
     return capacity;
 }
+
+/* Just for debugging */
+void Deque::print()
+{
+    for (int i = 0; i < size; i++)
+    {
+        cout << queue[i] << " ";
+    }
+    cout << endl;
+}

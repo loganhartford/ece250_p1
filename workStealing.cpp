@@ -61,7 +61,17 @@ int main()
         }
         else if (cmd == "SLEEP")
         {
-            cout << "failure" << endl;
+            int core;
+            cin >> core;
+            if (cpu && core >= 0 && core < cpu->getNumCores())
+            {
+                string result = cpu->sleep(core);
+                cout << result << endl;
+            }
+            else
+            {
+                cout << "failure" << endl;
+            }
         }
         else if (cmd == "SHUTDOWN")
         {

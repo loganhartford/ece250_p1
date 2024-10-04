@@ -1,6 +1,10 @@
 #ifndef DEQUE_HPP
 #define DEQUE_HPP
 
+#include <iostream>
+#include <string>
+using namespace std;
+
 class Deque
 {
 public:
@@ -13,6 +17,7 @@ public:
     int popFront();
     int getSize();
     int getCapacity();
+    void print();
 
 private:
     int *queue;
