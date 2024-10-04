@@ -27,7 +27,6 @@ private:
     Deque *cores;
 
     bool validateCore(int core);
-
     int stealTask();
 };
 
