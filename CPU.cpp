@@ -11,6 +11,11 @@ CPU::~CPU()
     delete[] cores;
 }
 
+int CPU::getNumCores()
+{
+    return numCores;
+}
+
 int CPU::addTask(int task)
 {
     int minSize = cores[0].getSize();
@@ -26,4 +31,14 @@ int CPU::addTask(int task)
     cores[minIndex].pushFront(task);
 
     return minIndex;
+}
+
+int CPU::runTask(int core)
+{
+    if (cores[core].getSize() == 0)
+    {
+        // Add task stealing
+        return -1;
+    }
+    return cores[core].popBack();
 }

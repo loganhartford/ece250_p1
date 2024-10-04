@@ -9,7 +9,9 @@ public:
     CPU(int numCores);
     ~CPU();
 
+    int getNumCores();
     int addTask(int task);
+    int runTask(int core);
 
 private:
     int numCores;
