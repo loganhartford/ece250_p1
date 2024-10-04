@@ -41,7 +41,7 @@ string CPU::addTask(int task)
         return "failure";
     }
 
-    int minSize = INT_MAX;
+    int minSize = 2147483647;
     int minIndex = -1;
     for (int i = 0; i < numCores; i++)
     {
@@ -125,7 +125,7 @@ string CPU::sleep(int core)
     {
         int task = cores[core].popFront();
 
-        int minSize = INT_MAX;
+        int minSize = 2147483647;
         int minIndex = -1;
         for (int i = 0; i < numCores; i++)
         {
